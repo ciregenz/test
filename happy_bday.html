@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Happy Birthday Katie!</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ffecd2);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
+            position: relative;
+            height: 100vh;
+            color: #ffffff;
+            text-align: center;
+            animation: rainbowBackground 10s infinite;
+            cursor: pointer; /* Change cursor to indicate interactivity */
+        }
+
+        /* Rainbow Animation */
+        @keyframes rainbowBackground {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Main Container */
+        .container {
+            position: absolute;
+            top: 45%; /* Adjusted to make space for the instruction line */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: bounce 2s infinite;
+        }
+
+        /* Bounce Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+            50% { transform: translate(-50%, -50%) translateY(-20px); }
+        }
+
+        /* Heading Styling */
+        h1 {
+            font-size: 4em;
+            text-shadow: 2px 2px #ff00ff, -2px -2px #00ffff;
+            margin-bottom: 10px; /* Reduced margin to fit the instruction line */
+            animation: flicker 1.5s infinite alternate;
+            user-select: none; /* Prevent text selection */
+        }
+
+        /* Instruction Line Styling */
+        .instruction {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            animation: fadeIn 2s ease-in-out infinite;
+            user-select: none;
+        }
+
+        /* Fade In Animation for Instruction */
+        @keyframes fadeIn {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Flicker Animation */
+        @keyframes flicker {
+            from { opacity: 1; }
+            to { opacity: 0.5; }
+        }
+
+        /* Cat GIF Styling */
+        .cat-gif {
+            width: 150px;
+            height: auto;
+            border: 5px dashed #ffffff;
+            border-radius: 15px;
+            animation: rotate 5s linear infinite;
+            pointer-events: none; /* Allow clicks through GIFs */
+        }
+
+        /* Rotate Animation */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Fake Ad Popup Styling */
+        .fake-ad {
+            position: fixed;
+            width: 200px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border: 3px solid #ff69b4;
+            border-radius: 10px;
+            padding: 10px;
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.5s forwards;
+        }
+
+        /* Slide In Animation */
+        @keyframes slideIn {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* Close Button Styling */
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: #ff0000;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            color: #fff;
+            font-weight: bold;
+            line-height: 20px;
+            text-align: center;
+            padding: 0;
+        }
+
+        /* Random Positioning for Ads */
+        .fake-ad.random-position {
+            top: calc(50% * var(--top));
+            left: calc(50% * var(--left));
+        }
+
+        /* Heart Styling */
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: red;
+            opacity: 1;
+            pointer-events: none; /* Allow clicks through hearts */
+            animation: floatUp 2s ease-out forwards;
+        }
+
+        /* Float Up Animation for Hearts */
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Cat GIF Appearance Animation */
+        @keyframes popUp {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .cat-gif.popup {
+            animation: popUp 0.3s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Birthday Katie Kudriatsev!</h1>
+        <p class="instruction">Click anywhere for special effects!</p>
+        <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat with Heart" class="cat-gif">
+    </div>
+
+    <!-- Fake Ad Popups -->
+    <div id="fakeAd1" class="fake-ad">
+        <button class="close-btn" onclick="closeAd('fakeAd1')">&times;</button>
+        <h3>Buy Now!</h3>
+        <p>Exclusive Valentine Deals!</p>
+    </div>
+
+    <div id="fakeAd2" class="fake-ad">
+        <button class="close-btn" onclick="closeAd('fakeAd2')">&times;</button>
+        <h3>Limited Offer!</h3>
+        <p>Get 50% Off Today!</p>
+    </div>
+
+    <div id="fakeAd3" class="fake-ad">
+        <button class="close-btn" onclick="closeAd('fakeAd3')">&times;</button>
+        <h3>Subscribe!</h3>
+        <p>Join our newsletter for more!</p>
+    </div>
+
+    <script>
+        // Array of fake ads
+        const ads = ['fakeAd1', 'fakeAd2', 'fakeAd3'];
+
+        // Function to show a random ad
+        function showRandomAd() {
+            const adId = ads[Math.floor(Math.random() * ads.length)];
+            const ad = document.getElementById(adId);
+
+            // Prevent multiple instances of the same ad
+            if (ad.style.display === 'block') return;
+
+            // Set random position
+            ad.style.top = Math.random() * (window.innerHeight - 160) + 'px';
+            ad.style.left = Math.random() * (window.innerWidth - 210) + 'px';
+
+            // Display the ad
+            ad.style.display = 'block';
+
+            // Hide after 5 seconds
+            setTimeout(() => {
+                ad.style.display = 'none';
+            }, 5000);
+        }
+
+        // Function to close ad manually
+        function closeAd(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Show ads at random intervals between 10-20 seconds
+        setInterval(() => {
+            showRandomAd();
+        }, Math.floor(Math.random() * 10000) + 10000);
+
+        // Array of Cat GIF URLs
+        const catGifs = [
+            "https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+            "https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif",
+            "https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif",
+            "https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif",
+            "https://media.giphy.com/media/13borq7Zo2kulO/giphy.gif",
+            "https://media.giphy.com/media/14uQ3cOFteDaU/giphy.gif",
+            "https://media.giphy.com/media/l0HlSNOxJB956qwfK/giphy.gif",
+            "https://media.giphy.com/media/12PA1eI8FBqEBa/giphy.gif",
+            "https://media.giphy.com/media/3oriO7A7bt1wsEP4cw/giphy.gif",
+            "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif"
+            // Add more URLs as desired
+        ];
+
+        // Function to get a random cat GIF URL
+        function getRandomCatGif() {
+            return catGifs[Math.floor(Math.random() * catGifs.length)];
+        }
+
+        // Function to create and display a cat GIF at click position
+        function createCatGif(x, y) {
+            const img = document.createElement('img');
+            img.src = getRandomCatGif();
+            img.classList.add('cat-gif', 'popup');
+            img.style.position = 'absolute';
+            img.style.left = x - 75 + 'px'; // Center the GIF horizontally (assuming width 150px)
+            img.style.top = y - 75 + 'px';  // Center the GIF vertically (assuming height 150px)
+            img.style.width = '150px';
+            img.style.pointerEvents = 'none'; // Allow clicks through the GIF
+
+            document.body.appendChild(img);
+
+            // Remove the GIF after 5 seconds
+            setTimeout(() => {
+                img.remove();
+            }, 5000);
+        }
+
+        // Function to create and display a heart at click position
+        function createHeart(x, y) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = x + 'px';
+            heart.style.top = y + 'px';
+
+            document.body.appendChild(heart);
+
+            // Remove the heart after the animation completes (2 seconds)
+            heart.addEventListener('animationend', () => {
+                heart.remove();
+            });
+        }
+
+        // Event listener for clicks
+        document.addEventListener('click', function(event) {
+            // Prevent triggering clicks on ads or buttons
+            if (event.target.closest('.fake-ad') || event.target.classList.contains('close-btn')) {
+                return;
+            }
+
+            // Get click coordinates
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Create cat GIF and heart at the click position
+            createCatGif(x, y);
+            createHeart(x, y);
+        });
+    </script>
+</body>
+</html>
